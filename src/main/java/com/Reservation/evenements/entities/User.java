@@ -1,24 +1,32 @@
-package com.Reservation.evenements.entities;
+package com.example.eventbooking.entities;
 
+import com.Reservation.evenements.entities.Reservation;
+import com.Reservation.evenements.entities.Role;
 import jakarta.persistence.*;
 import lombok.*;
-import java.util.Set;
+
+import java.util.*;
 
 @Entity
-@Table(name = "users")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table(name = "users")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String username;
+    private String fullName;
+
+    @Column(unique = true)
+    private String email;
 
     private String password;
+
+    private String phone;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -26,8 +34,9 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private Set<Role> roles;
+    private Set<Role> roles = new HashSet<>();
+
+    // العلاقات مع الحجوزات
+    @OneToMany(mappedBy = "user")
+    private List<Reservation> reservations;
 }
-
-
-
