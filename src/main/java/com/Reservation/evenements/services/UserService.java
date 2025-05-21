@@ -6,6 +6,7 @@ import com.Reservation.evenements.dto.AuthResponse;
 import com.Reservation.evenements.dto.LoginRequest;
 import com.Reservation.evenements.dto.RegisterRequest;
 import com.Reservation.evenements.entities.Role;
+import com.Reservation.evenements.entities.User;
 import com.Reservation.evenements.repositories.RoleRepository;
 import com.Reservation.evenements.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +32,7 @@ public class UserService {
         Role userRole = roleRepository.findByName("ROLE_USER")
                 .orElseThrow(() -> new RuntimeException("الدور ROLE_USER غير موجود"));
 
-        com.example.eventbooking.entities.User user = com.example.eventbooking.entities.User.builder()
+        User user = User.builder()
                 .fullName(request.getFullName())
                 .email(request.getEmail())
                 .phone(request.getPhone())
@@ -46,13 +47,13 @@ public class UserService {
 
     // تسجيل الدخول
     public AuthResponse login(LoginRequest request) {
-        Optional<com.example.eventbooking.entities.User> optionalUser = userRepository.findByEmail(request.getEmail());
+        Optional<User> optionalUser = userRepository.findByEmail(request.getEmail());
 
         if (optionalUser.isEmpty()) {
             return new AuthResponse(null, "المستخدم غير موجود ❌");
         }
 
-        com.example.eventbooking.entities.User user = optionalUser.get();
+        User user = optionalUser.get();
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             return new AuthResponse(null, "كلمة المرور غير صحيحة ❌");

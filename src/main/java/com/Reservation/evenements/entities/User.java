@@ -1,4 +1,4 @@
-package com.example.eventbooking.entities;
+package com.Reservation.evenements.entities;
 
 import com.Reservation.evenements.entities.Reservation;
 import com.Reservation.evenements.entities.Role;
