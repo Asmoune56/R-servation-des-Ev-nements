@@ -1,34 +1,26 @@
 package com.Reservation.evenements.entity;
 
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
+import lombok.Setter;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Reservation {
-
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private LocalDateTime reservationDate;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
+    private Long idreservation;
+    @ManyToOne
+    private Client client;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    private Evenement evenement;
 
-    @ManyToOne
-    @JoinColumn(name = "event_id")
-    private Event event;
 
-    private int numberOfSeats;
-
-    // getters & setters
 }
-

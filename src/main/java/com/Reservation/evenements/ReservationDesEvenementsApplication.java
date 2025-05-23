@@ -8,7 +8,6 @@ public class ReservationDesEvenementsApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ReservationDesEvenementsApplication.class, args);
-		System.out.println("✅ Application started successfully");
 	}
 
 }

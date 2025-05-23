@@ -1,21 +1,29 @@
-package com.Reservation.evenements.entity;
+package com.Reservation.evenements.dto;
 
-import jakarta.persistence.*;
+
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
-@Table(name = "user")
-@Inheritance(strategy = InheritanceType.JOINED)
-public class User  {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
+
+
+
+public class ClientDto {
     private Long id;
     private String firstName;
     private String lastName;
-    private String email;
-    private String password;
+
+    public ClientDto() {
+    }
+
+    public ClientDto(String lastName, Long id, String firstName, String email, String password) {
+        this.lastName = lastName;
+        this.id = id;
+        this.firstName = firstName;
+        this.email = email;
+        this.password = password;
+    }
 
     public Long getId() {
         return id;
@@ -57,26 +65,6 @@ public class User  {
         this.password = password;
     }
 
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    public User(Long id, String firstName, String lastName, String email, String password, Role role) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-        this.role = role;
-    }
-
-    @Enumerated(EnumType.STRING)
-    public Role role;
-
-    public User() {
-    }
+    private String email;
+    private String password;
 }

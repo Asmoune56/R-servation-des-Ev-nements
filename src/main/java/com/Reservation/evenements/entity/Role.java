@@ -1,6 +1,5 @@
 package com.Reservation.evenements.entity;
 
-public enum UserRole {
-    USER,
-    ADMIN
+public enum Role {
+    ADMIN,CLIENT
 }

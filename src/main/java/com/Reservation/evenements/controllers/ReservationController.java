@@ -1,51 +1,31 @@
 package com.Reservation.evenements.controllers;
 
-import com.Reservation.evenements.dto.ReservationDto;
-import com.Reservation.evenements.dto.ReservationMapper;
-import com.Reservation.evenements.entity.Reservation;
-import com.Reservation.evenements.service.ReservationService;
+
+import com.Reservation.evenements.dto.ReservatioDto;
+import com.Reservation.evenements.service.ResrvationService;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/reservations")
-@RequiredArgsConstructor
-
+@AllArgsConstructor
 public class ReservationController {
 
-    private final ReservationService reservationService;
-    private final ReservationMapper reservationMapper;
+    public ResrvationService resrvationService;
 
-    @GetMapping
-    public List<ReservationDto> getAllReservations() {
-        return reservationService.getAllReservations()
-                .stream()
-                .map(reservationMapper::toDto)
-                .collect(Collectors.toList());
+    @PostMapping("/addReservation")
+    public ReservatioDto addReservation(@RequestBody ReservatioDto reservatioDto){
+        return resrvationService.Resrever(reservatioDto);
     }
 
-    @GetMapping("/{id}")
-    public ReservationDto getReservationById(@PathVariable Long id) {
-        Optional<Reservation> reservation = reservationService.getReservationById(id);
-        return reservation.map(reservationMapper::toDto)
-                .orElseThrow(() -> new RuntimeException("Réservation introuvable"));
+    @GetMapping("/allReservations")
+    public List<ReservatioDto> getAllReservations(){
+        return resrvationService.getAllReservation();
     }
 
-    @PostMapping
-    public ReservationDto createReservation(@RequestBody ReservationDto dto) {
-        Reservation reservation = reservationMapper.toEntity(dto);
-        return reservationMapper.toDto(reservationService.saveReservation(reservation));
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteReservation(@PathVariable Long id) {
-        reservationService.deleteReservation(id);
+    @GetMapping("/reservation/{id}")
+    public ReservatioDto getreservationById(@PathVariable Long id ){
+        return resrvationService.getReservationById(id);
     }
 }
-
