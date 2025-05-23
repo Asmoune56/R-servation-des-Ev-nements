@@ -1,21 +1,20 @@
-package com.Reservation.evenements.entities;
+package com.Reservation.evenements.entity;
 
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-@Builder
-@Table(name = "reservations")
+@NoArgsConstructor
 public class Reservation {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private LocalDateTime reservationDate;
@@ -27,5 +26,9 @@ public class Reservation {
     @ManyToOne
     @JoinColumn(name = "event_id")
     private Event event;
+
+    private int numberOfSeats;
+
+    // getters & setters
 }
 
