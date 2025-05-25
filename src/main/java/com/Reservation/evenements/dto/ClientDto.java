@@ -1,29 +1,27 @@
 package com.Reservation.evenements.dto;
 
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-
-
-
 public class ClientDto {
+
     private Long id;
     private String firstName;
     private String lastName;
+    private String email;
+    private String password;
 
+    // Default constructor
     public ClientDto() {
     }
 
-    public ClientDto(String lastName, Long id, String firstName, String email, String password) {
-        this.lastName = lastName;
+    // Parameterized constructor
+    public ClientDto(Long id, String firstName, String lastName, String email, String password) {
         this.id = id;
         this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.password = password;
     }
+
+    // Getters and setters
 
     public Long getId() {
         return id;
@@ -64,7 +62,4 @@ public class ClientDto {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    private String email;
-    private String password;
 }

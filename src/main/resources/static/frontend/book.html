@@ -1,0 +1,11 @@
+<input type="hidden" id="eventId" value="1234" />
+<button id="book">Book</button>
+
+<script type="module">
+    import { fetchData } from './js/main.js';
+    document.getElementById('book').onclick = async () => {
+        const id = document.getElementById('eventId').value;
+        const result = await fetchData('/api/events/book', 'POST', { eventId: id });
+        alert("Booking successful!");
+    };
+</script>

@@ -1,0 +1,9 @@
+<div id="about"></div>
+
+<script>
+    fetch('/api/about')
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById('about').innerText = data.content;
+        });
+</script>

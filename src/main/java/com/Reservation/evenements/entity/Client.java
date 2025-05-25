@@ -9,12 +9,16 @@ import lombok.Setter;
 import java.util.List;
 
 @Entity
-
+@Getter
+@Setter
 public class Client extends User {
 
     public Client() {
         this.setRole(Role.CLIENT);
     }
+
+
+
 
     public Client(List<Reservation> reservations) {
         this.reservations = reservations;
@@ -30,5 +34,6 @@ public class Client extends User {
 
     @OneToMany(mappedBy = "client" , cascade = CascadeType.ALL , orphanRemoval = true)
     private List<Reservation> reservations;
+
 
 }

@@ -1,0 +1,12 @@
+<!-- frontend/index.html -->
+<script type="module">
+    import { fetchData } from './js/main.js';
+
+    const events = await fetchData('/api/events/public');
+    const container = document.getElementById('event-list');
+    events.forEach(ev => {
+        const li = document.createElement('li');
+        li.textContent = `${ev.eventname} - ${ev.type}`;
+        container.appendChild(li);
+    });
+</script>

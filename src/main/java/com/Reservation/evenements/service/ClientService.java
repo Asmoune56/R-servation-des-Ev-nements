@@ -6,6 +6,8 @@ import com.Reservation.evenements.dto.ClientDto;
 import com.Reservation.evenements.entity.Client;
 import com.Reservation.evenements.repository.ClientRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,15 +18,33 @@ public class ClientService {
     private final ClientRepository clientRepository;
     private ClientMapper clientMapper;
 
-    public ClientService(ClientRepository clientRepository , ClientMapper clientMapper) {
+    @Autowired
+    private final PasswordEncoder passwordEncoder;
+
+
+    public ClientService(ClientRepository clientRepository,
+                         ClientMapper clientMapper,
+                         PasswordEncoder passwordEncoder) {
         this.clientRepository = clientRepository;
         this.clientMapper = clientMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional
-    public ClientDto SaveClient(ClientDto clientDto){
-        return clientMapper.toClientDto(clientRepository.save(clientMapper.toCliententity(clientDto)));
+    public ClientDto SaveClient(ClientDto clientDto) {
+        // نحول DTO إلى كيان
+        Client client = clientMapper.toCliententity(clientDto);
+
+        // نُشفّر كلمة السر
+        client.setPassword(passwordEncoder.encode(client.getPassword()));
+
+        // نحفظ الكيان
+        Client savedClient = clientRepository.save(client);
+
+        // نعيد تحويله إلى DTO
+        return clientMapper.toClientDto(savedClient);
     }
+
 
     public List<ClientDto> getallClients(){
         return clientRepository.findAll().stream()

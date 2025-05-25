@@ -1,0 +1,21 @@
+<form id="searchForm">
+    <input type="text" id="query" placeholder="Search..." />
+    <button>Search</button>
+</form>
+<ul id="results"></ul>
+
+<script>
+    document.getElementById('searchForm').addEventListener('submit', async e => {
+        e.preventDefault();
+        const query = document.getElementById('query').value;
+        const res = await fetch(`/api/events/search?query=${query}`);
+        const results = await res.json();
+        const list = document.getElementById('results');
+        list.innerHTML = '';
+        results.forEach(ev => {
+            const li = document.createElement('li');
+            li.textContent = `${ev.eventname} - ${ev.type}`;
+            list.appendChild(li);
+        });
+    });
+</script>
